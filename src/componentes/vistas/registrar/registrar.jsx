@@ -2,7 +2,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 import "../login/login.css";
-import DatePicker from "react-datepicker";
 
 export const Registrar = () => {
   const [mostrarForm, setMostrar] = useState(false);
