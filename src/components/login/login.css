@@ -10,7 +10,7 @@
 }
 
 .registrar>h1{
-    color: var(--azul-principal);
+    color: var(--color-principal);
     font-size: 48px;
     text-align: center;
 }
@@ -39,7 +39,7 @@
 
 .titulo h1{
     font-size: 48px;
-    color: var(--azul-principal);
+    color: var(--color-principal);
 }
 
 .formulario{
@@ -82,7 +82,7 @@
 }
 
 .contenedor select{
-    background-color: var(--azul-principal);
+    background-color: var(--color-principal);
     color: white;
 }
 
@@ -100,7 +100,7 @@
     margin: 0 auto;
     border-radius: var(--curvatura);
     cursor: pointer;
-    background-color: var(--azul-principal);
+    background-color: var(--color-principal);
     border: none;
     color: white;
 }
@@ -108,6 +108,10 @@
 .formulario .link{
     display: block;
     margin-top: 10px;
-    color: var(--azul-principal);
+    color: var(--color-principal);
     text-decoration: none;
+}
+
+.select-fecha{
+    width: 100%;
 }

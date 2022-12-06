@@ -1,63 +1,95 @@
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useState } from "react";
 import "../login/login.css";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
+import axios from "axios";
 
 export const Registrar = () => {
   const [mostrarForm, setMostrar] = useState(false);
-  const [tempNacimiento, setNacimiento] = useState(new Date());
 
   const initialValues = {
     tipoUsuario: "seleccionar",
     nombre: "",
     identificacion: "",
-    tipoAfilicion: "beneficiario",
+    tipoAfiliacion: "beneficiario",
     tipoID: "cedula",
     empresa: "seleccionar",
     otraEmpresa: "",
     especialidad: "seleccionar",
     fijo: "",
     celular: "",
-    fecha: "",
+    fecha: new Date(),
     correo: "",
     fechaNacimiento: "",
     sexo: "masculino",
-    codigo: ""
+    codigo: "",
+    contrasena: "",
   };
 
   const usuarioValido = (e) => {
     setMostrar(e.target.value !== "seleccionar");
-    setFieldValue("tipoUsuario", e.target.value);
+    formik.setFieldValue("tipoUsuario", e.target.value);
   };
 
-  const validationSchema = Yup.object().shape({
-    celular: Yup.number().min(10).max(10),
-  });
+  const validate = (values) => {
+    let errors = {};
 
-  const onSubmit = () => {};
+    if (formik.values.tipoUsuario === "paciente") {
+      //Se necesitan nombre, tipoAfiliacion, empresa que lo afilió, identificacion, tipoIdentificacion,
+      //Contraseña, teléfono fijo, teléfono celular, correo, Fecha de nacimiento y sexo
 
-  const formik = useFormik({ initialValues, onSubmit, validationSchema });
-  const {
-    values,
-    errors,
-    handleChange,
-    handleSubmit,
-    handleBlur,
-    setFieldValue,
-    touched,
-  } = formik;
+      if (!values.nombre) {
+        errors.nombre = "Se debe ingresar un nombre";
+      }
+
+      if (
+        values.empresa === "seleccionar" ||
+        (values.empresa === "otra" && !values.otraEmpresa)
+      ) {
+        errors.empresa = "Se debe seleccionar una empresa válida";
+      }
+
+      if (!values.identificacion) {
+        errors.identificacion = "Ingrese un número de identificacion";
+      }
+
+      if (values.contrasena?.length < 6 || !values.contrasena?.length > 16) {
+        errors.contrasena = "La contraseña debe tener entre 6 y 16 caracteres";
+      }
+
+      if (values.fijo?.toString().length !== 10) {
+        errors.fijo = "El número fijo debe tener 10 cifras";
+      }
+
+      if (values.celular?.toString().length !== 10) {
+        errors.celular = "El número celular debe tener 10 cifras";
+      }
+
+      if (!values.correo) {
+        errors.correo = "Debe ingresar un correo";
+      }
+    }
+    return errors;
+  };
+
+  const onSubmit = () => {
+    console.log(formik.values.fecha);
+  };
+
+  const formik = useFormik({ initialValues, onSubmit, validate });
 
   return (
     <div className="registrar">
       <h1>Registrar Usuario</h1>
-      <form className="formulario" onSubmit={handleSubmit}>
+      <form className="formulario" onSubmit={formik.handleSubmit}>
         <div className="contenedor">
           <select
             name="tipoUsuario"
             id="tipoUsuario"
-            value={values.tipoUsuario}
+            value={formik.values.tipoUsuario}
             onChange={usuarioValido}
-            onBlur={handleBlur}
+            onBlur={formik.handleBlur}
           >
             <option value="seleccionar">Seleccione tipo de usuario</option>
             <option value="paciente">Paciente</option>
@@ -71,19 +103,19 @@ export const Registrar = () => {
                 name="nombre"
                 id="nombre"
                 placeholder="Nombre"
-                value={values.nombre}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formik.values.nombre}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
 
-              {values.tipoUsuario === "medico" && (
+              {formik.values.tipoUsuario === "medico" && (
                 <>
                   <select
                     name="especialidad"
                     id="especialidad"
-                    value={values.especialidad}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    value={formik.values.especialidad}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   >
                     <option value="beneficiario">
                       Seleccionar Especialidad
@@ -96,20 +128,20 @@ export const Registrar = () => {
                     name="codigo"
                     id="codigo"
                     placeholder="Código médico"
-                    value={values.codigo}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    value={formik.values.codigo}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
                 </>
               )}
-              {values.tipoUsuario === "paciente" && (
+              {formik.values.tipoUsuario === "paciente" && (
                 <>
                   <select
                     name="tipoAfiliacion"
                     id="tipoAfiliacion"
-                    value={values.tipoAfiliacion}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    value={formik.values.tipoAfiliacion}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   >
                     <option value="beneficiario">Beneficiario</option>
                     <option value="cotizante">Cotizante</option>
@@ -118,19 +150,22 @@ export const Registrar = () => {
                     <select
                       name="empresa"
                       id="empresa"
-                      value={values.empresa}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={formik.values.empresa}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                     >
                       <option value="seleccionar">Seleccionar empresa</option>
                       <option value="otra">Otra</option>
                     </select>
-                    {values.empresa === "otra" && (
+                    {formik.values.empresa === "otra" && (
                       <input
                         type="text"
                         name="otraEmpresa"
                         id="otraEmpresa"
                         placeholder="¿Otra?"
+                        value={formik.values.otraEmpresa}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
                     )}
                   </div>
@@ -142,16 +177,16 @@ export const Registrar = () => {
                   name="identificacion"
                   id="identificacion"
                   placeholder="Identificacion"
-                  value={values.identificacion}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={formik.values.identificacion}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <select
                   name="tipoID"
                   id="tipoID"
-                  value={values.tipoID}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={formik.values.tipoID}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 >
                   <option value="cc">Cédula</option>
                   <option value="ti">Tarjeta de identidad</option>
@@ -160,64 +195,64 @@ export const Registrar = () => {
                 </select>
               </div>
               <input
-                type="text"
-                name="contasena"
-                id="contasena"
+                type="password"
+                name="contrasena"
+                id="contrasena"
                 placeholder="Contraseña"
-                value={values.contrasena}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formik.values.contrasena}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               <input
                 type="number"
                 name="fijo"
                 id="fijo"
                 placeholder="Teléfono fijo"
-                value={values.fijo}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formik.values.fijo}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               <input
                 type="number"
                 name="celular"
                 id="celular"
                 placeholder="Teléfono celular"
-                value={values.celular}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formik.values.celular}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               <input
                 type="email"
                 name="correo"
                 id="correo"
                 placeholder="Correo"
-                value={values.correo}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                value={formik.values.correo}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
-              <div className="divisor">
-                <input
-                  type="date"
-                  name="fechaNacimiento"
-                  id="fechaNacimiento"
-                  selected={tempNacimiento}
-                  onChange={(date) => {
-                    setNacimiento(date);
-                    setFieldValue("fechaNacimiento", date);
-                  }}
-                />
+                <>
+                  <DatePicker
+                    selected={formik.values.fecha}
+                    dateFormat="dd/MM/yyyy"
+                    className="select-fecha"
+                    id="fecha"
+                    name="fecha"
+                    showMonthDropdown
+                    showYearDropdown
+                    onChange={(date) => formik.setFieldValue("fecha", date)}
+                  />
+                </>
                 <select
                   name="sexo"
                   id="sexo"
-                  value={values.sexo}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={formik.values.sexo}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 >
                   <option value="cc">Masculino</option>
                   <option value="ti">Femenino</option>
                   <option value="ce">Otro</option>
                 </select>
-              </div>
               <button className="enviar" type="submit">
                 Registrar
               </button>

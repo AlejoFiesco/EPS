@@ -1,0 +1,49 @@
+.user-div-container{
+    width: 95vw;
+    height: fit-content;
+    margin: auto;
+    background-color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    margin-top: 25px;
+    padding: 5px;
+}
+
+.user-div-container-foto{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+    box-shadow: 5px 5px 15px var(--color-fondo-cita);
+    margin-right: 7 0px;
+}
+
+.user-div-container-foto>img{
+    border-radius: 50%;
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+.user-div-container-datos{
+    height: fit-content;
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+}
+
+.user-div-container-datos>h2{
+    color: var(--color-principal);
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.user-div-container-datos>p{
+    display: block;
+    width: 100%;
+    margin: 0 auto 5px;
+    text-align: left;
+}

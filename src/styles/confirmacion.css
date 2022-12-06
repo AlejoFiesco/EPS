@@ -1,0 +1,46 @@
+.div-container-confirm{
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-modal);
+}
+
+.div-confirm{
+    background-color: var(--font-color);
+    width: 40%;
+    border-radius: 20px;
+}
+
+
+
+.div-confirm>h3, .div-confirm>p, .div-confirm>div{
+    display: block;
+    width: 90%;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.div-confirm>h3{
+    border-bottom: 1px solid grey;
+}
+
+.div-confirm>div{
+    display: flex;
+    justify-content: space-evenly
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.div-btn-confirm{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0 15px;
+}

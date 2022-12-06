@@ -1,0 +1,9 @@
+.footer-div-container{
+    background-color: var(--color-principal);
+    font-weight: bold;
+    color: var(--font-color);
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

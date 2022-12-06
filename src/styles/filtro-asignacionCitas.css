@@ -1,0 +1,46 @@
+.form-filtro-asignacionCitas{
+    display: grid;
+    grid-row-gap: 15px;
+}
+
+.form-filtro-asignacionCitas>label{
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    color: black;
+    margin-top: 5px;
+}
+
+.form-filtro-asignacionCitas>button{
+    margin-top: 20px;
+    width: 80%;
+    height: 47px;
+    justify-self: center;    
+    border-radius: 15px;
+    background-color: var(--color-principal);
+    border: none;
+    color: var(--font-color);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 1px 0.5px 15px  var(--color-borde-trans);
+    transition: all 0.2s;
+}
+
+.form-filtro-asignacionCitas>select:hover{
+    background-color: var(--color-principal);
+    color: var(--font-color);
+    border: 1px solid var(--color-borde-trans);
+}
+
+.form-filtro-asignacionCitas>button:hover{
+    background-color: var(--font-color);
+    color: var(--color-principal);
+    border: var(--color-borde-trans);
+}
+
+.errorM{
+    color: var(--rojo);
+    text-align: left;
+    font-size: 10px;
+    font-weight: bold;
+  }

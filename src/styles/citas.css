@@ -1,0 +1,73 @@
+.div-lista-citas{
+    width:95%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.div-conainer-citas-disponibles{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-content: space-around;
+    grid-gap: 5px 5px;
+}
+
+.div-conainer-citasA-medico{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    justify-content: space-around;
+    grid-gap: 5px 5px;
+}
+
+.div-conainer-citas{
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    justify-content: space-around;
+    grid-gap: 5px 5px;
+}
+
+.div-conainer-citas>p, .div-conainer-citas-disponibles>p, .div-conainer-citasA-medico>p{
+    padding-bottom: 5px;
+    width: 95%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.div-conainer-citas>span, .div-conainer-citas-disponibles>span, .div-conainer-citasA-medico>span{
+    height: 42px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin-left: 15px;
+}
+
+.cita{
+    margin: 15px;
+    background-color: var(--color-fondo-cita);
+    border-radius: 20px;
+    height: fit-content;
+    align-items: center;
+    padding: 15px;
+}
+
+.div-conainer-citas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 600px) {
+    .cita{
+        margin: 12px auto;
+    }
+}
+
+span, p{
+    float: right;
+    display: flex;
+    align-items: center;
+    word-break:break-all;
+    margin: 0 0 1em 1em;
+}
