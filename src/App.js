@@ -21,8 +21,8 @@ function App() {
         {/* se define el conjunto de rutas */}
         <Routes>
           {/* se esperan las rutas */}
-          <Route exact path = '/' element={<Login />} />
-          <Route path = '/registrar' element={<Registrar />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/registrar' element={<Registrar />} />
           <Route path='/loader' element={ <Loader /> }/>
           <Route path='/afiliado' element={ <SesionAfiliado /> }/>
           <Route path='/admin' element={ <SesionAdmin /> }/>
